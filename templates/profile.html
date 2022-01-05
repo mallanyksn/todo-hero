@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name='description' content="Todo-Hero is a easy and fun verison of your normal todo-list that's makes every task completed worth the while.">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles.css') }}">
+    <script type="text/javascript" src="{{ url_for('static',filename='all.js') }}"></script>
+    <title>My Profile</title>
+</head>
+
+<body>
+    <div class="main-content">
+        <nav class="profile-nav">
+            <a href="{{ url_for('home') }}">
+                <i class="home fas fa-house"></i>
+            </a><a href="{{ url_for('index') }}">
+                <button class="logout-button">Logout</button>
+            </a>
+        </nav>
+        <main>
+            <div class="left-side">
+                <img src="{{ url_for('static',filename='assets/default.jpg') }}" class="profile-picture" id="profilepic">
+                <p>Userame: {{ current_user.name }}</p>
+                <p>Logged in with <a href="#">{{ current_user.email }}</a></p>
+            </div>
+            <div class="right-side">
+                <div class="tab">
+                    <button id="defaultOpen" class="tablinks" onclick="openTab(event,'Profile')">Profile</button>
+                    <button class="tablinks" onclick="openTab(event,'Settings')">Settings</button>
+                </div>
+                <div id="Profile" class="tabcontent">
+                    <h1>Profile</h1>
+                    <form class="edit-profile-form" action='{{ url_for("update_profile") }}' method="post">
+                        <input type="file" onchange="preview_2(this);" name="profile-pic" value="Profile">
+                        <input value="{{ current_user.name }}" type="text" name="username" placeholder="Userame">
+                        <input type="email"  value="{{ current_user.email }}" name="email" placeholder="Email">
+                        <input type="password" name="password" placeholder="Password">
+                        <button>Save</button>
+                    </form>
+                </div>
+                <div id="Settings" class="tabcontent">
+                    <h1>Settings</h1>
+                    <form class="settings" action="{{ url_for('edit_preferences') }}" method="post">
+                        <div class="setting">
+                            <label>Email Notifications</label>
+                            <input type="checkbox" name="emailnotification">
+                        </div>
+                        <div class="setting">
+                            <label>Set Account Public</label>
+                            <input type="checkbox" name="public">
+                        </div>
+                        <div class="setting">
+                            <label>Desktop Notifications</label>
+                            <input type="checkbox" name="desktopnotifications">
+                        </div>
+                        <div class="setting">
+                            <label>Number of todos</label>
+                            <input type="number" name="numtodos" min="0">
+                        </div>
+                        <button class="save-settings" type="submit">Save</button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script type="text/javascript">
+    var outImage = 'profilepic';
+
+    function preview_2(obj) {
+        if (FileReader) {
+            var reader = new FileReader();
+            reader.readAsDataURL(obj.files[0]);
+            reader.onload = function(e) {
+                var image = new Image();
+                image.src = e.target.result;
+                image.onload = function() {
+                    document.getElementById(outImage).src = image.src;
+                };
+            }
+        } else {
+            // Not supported
+        }
+    }
+
+    function openProfile() {
+        document.getElementById('defaultOpen').click()
+    }
+
+    function openTab(evt, tabname) {
+        // Declare variables
+        var i, tabcontent, tablinks;
+
+        //get all elements with class='tabcontent' and hide them
+        tabcontent = document.getElementsByClassName('tabcontent');
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = 'none'
+        }
+        // get all elements with class='tablinks' and remove the class 'active'
+        tablinks = document.getElementsByClassName('tablinks');
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].className = tablinks[i].className.replace(' active', '');
+        }
+        // show the current tab, and add an active class to the link that the tab opened
+        document.getElementById(tabname).style.display = 'block';
+        evt.currentTarget.className += ' active';
+    }
+    document.getElementById('defaultOpen').click()
+    </script>
+</body>
+
+</html>

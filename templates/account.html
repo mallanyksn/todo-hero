@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name='keywords' content="">
+    <script type="text/javascript" src="{{ url_for('static',filename='all.js') }}"></script>
+    <title>Account</title>
+    <style type="text/css">
+    body {
+        /*background-image: url('../static/clouds.jpg');*/
+        background-size: cover;
+    }
+
+    .home {
+        position: absolute;
+        top: 0;
+        left: 0;
+        padding: 10px;
+        font-size: 1.5rem;
+        border: none;
+        background-color: inherit;
+        color: #aaa;
+    }
+
+    .home:hover {
+        color: #555;
+    }
+
+    .container {
+        position: absolute;
+        top: 10%;
+        bottom: 10%;
+        left: 20%;
+        right: 20%;
+    }
+
+    .tablink {
+        background-color: #555;
+        color: white;
+        float: left;
+        border: none;
+        outline: none;
+        cursor: pointer;
+        padding: 14px 16px;
+        font-size: 17px;
+        width: 50%;
+    }
+
+    .tablink:hover {
+        background-color: #777;
+    }
+
+    .tabcontent {
+        height: 400px;
+        width: 88%;
+        color: white;
+        display: none;
+        padding: 50px;
+        text-align: center;
+        box-shadow: 10px 10px 5px #aaaaaa;
+    }
+
+    #Login {
+        background-color: #4d4dff;
+    }
+
+    #Register {
+        background-color: #ff8533;
+    }
+
+    .login-form,
+    .register-form {
+        font-size: 17px;
+        font-family: Arial;
+    }
+
+    .login-form,
+    .register-form {
+        margin: 15% 15% 15% 15%;
+    }
+
+    .login-form input,
+    .register-form input {
+        padding: 10px;
+        width: 100%;
+        outline: none;
+        border: 1px solid;
+        margin-bottom: 20px;
+        font-size: 1.2rem;
+    }
+
+    .login-form input:focus {
+        background-color: #ddd;
+    }
+
+    .login-form button,
+    .register-form button {
+        padding: 10px;
+        width: 50%;
+        background-color: white;
+        border: 1px solid;
+        font-size: 1rem;
+    }
+
+    .login-form button:hover {
+        background: #4d4dff;
+        color: white;
+    }
+
+    .register-form button:hover {
+        background-color: #ff8533;
+        color: white;
+    }
+    </style>
+</head>
+
+<body>
+    <a href="{{ url_for('home') }}">
+        <button class="home"><i class="fas fa-house"></i></button>
+    </a>
+    <div class="container">
+        <button class="tablink" onclick="openTab('Login',this,'#4d4dff')" id="defaultOpen">Login</button>
+        <button class="tablink" onclick="openTab('Register',this,'#ff8533')">Register</button>
+        <div id='Login' class="tabcontent">
+            <form class="login-form" action="{{ url_for('login') }}" method="post">
+                {% for message in get_flashed_messages() %}
+                <i>{{ message }}</i>
+                {% endfor %}
+                <div class="login-email">
+                    <input type="email" name="loginemail" placeholder="Email">
+                </div>
+                <div class="login-password">
+                    <input type="password" name="loginpassword" placeholder="Password">
+                </div>
+                <div class="login-submit">
+                    <button type="submit">Login</button>
+                </div>
+            </form>
+        </div>
+        <div id="Register" class="tabcontent">
+            <form class="register-form" action="{{ url_for('register') }}" method="post">
+                <div class="username">
+                    <input type="text" name="username" value placeholder="Username">
+                </div>
+                <div class="register-email">
+                    <input type="email" name="registeremail" value placeholder="Email">
+                </div>
+                <div class="register-password">
+                    <input type="password" name="registerpassword" value placeholder="Password">
+                </div>
+                <div class="register-submit">
+                    <button type="submit">Create Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script type="text/javascript">
+    function openTab(tabname, elmnt, color) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName('tabcontent');
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = 'none';
+        }
+        tablinks = document.getElementsByClassName('tablink');
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].style.backgroundColor = '';
+        }
+        document.getElementById(tabname).style.display = 'block';
+        elmnt.style.backgroundColor = color;
+
+    }
+    document.getElementById("defaultOpen").click();
+    </script>
+</body>
+
+</html>

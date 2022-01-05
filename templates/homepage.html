@@ -1,0 +1,189 @@
+{% include 'header.html' %}
+<main>
+    <div id="container" class="modal">
+        <span class="close-modal" title="Close Delete" onclick="document.getElementById('container').style.display = 'none'" ;>&times;</span>
+        <div class="delete-window">
+        	<label>Delete from</label>
+        	<input type="text" name="delete-range" list="ranges">
+        	<datalist id="ranges">
+        		<option value="Today">
+        		<option value="This Month">
+        		<option value="All Time">
+        	</datalist>
+        	<input type="submit" name="delete" value="Delete">
+        </div>
+    </div>
+    <!-- SideNav -->
+    <nav class="sidenav">
+        <i class="sidenav-icon fas fa-pen" title="Write a new Todo"></i>
+        <i class="sidenav-icon fas fa-trash" title="Delete Options" onclick="document.getElementById('container').style.display = 'block';"></i>
+        <i onclick="openHistory()" class="fas fa-book sidenav-icon" title="My History"></i>
+        <i class="sidenav-icon fas fa-video" title="Tutorial"></i>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('profile') }}">
+            <i class="sidenav-icon fas fa-gear" title="Settings"></i>
+        </a>
+        {% endif %}
+    </nav>
+    <!-- Center Content -->
+    <div class="center-content">
+        <div id="historySideNav" class="history-sidenav">
+            <button class="close" onclick="closeHistory()">&times;</button>
+            <h3>History</h3>
+            <input type="search" onkeyup="searchHistory()" placeholder="Search for a todo" name="search-history">
+            <div class="deleted-todos">
+                <a href="{{ url_for('clear_history') }}"><button>Clear All</button></a>
+                {% if deleted_todos %}
+                {% for todo in deleted_todos %}
+                <div class="today">
+                    <div class="did-todo">
+                        <span>{{ todo.todo }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div>
+                    <h2>You don't have any history of notes</h2>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <form class="todo-add" action='{{ url_for("add_todo") }}' method="post">
+            <input type="text" id="add-todo" maxlength="70" placeholder="Type todo and hit Enter" name="todo">
+        </form>
+        <!-- Today's Todos-section -->
+        <div class="todo-today">
+            <div class="date-today">
+                <a href="#">{{ date }}</a>
+            </div>
+            <div class="todos-today">
+                {% if todos %}
+                {% for todo in todos %}
+                <div>
+                </div>
+                <div class="todo">
+                    <input type="checkbox" name="finishedTodo">
+                    <span id="todoItem">{{ todo.todo }}</span>
+                    <a class="delete" href="{{ url_for('delete',todoid=todo.id) }}">Delete</a>
+                    <a href="#" onclick="showEditPopup(todo.id)" class="edit">Edit</a>
+                </div>
+                {% endfor %}
+                {% else %}
+                <div class="todo">
+                    <span>There are no todo's yet. Add a todo</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+        <!-- Random Thoughts Section -->
+        <div class="thoughts">
+            <div class="random-thoughts">
+                <span>Random Thoughts</span>
+                <a href="javascript:void(0)" onclick="openRandomThoughtInput()" class="add-link">Add</a>
+                <div class="notes">
+                    <div id="random" class="random-thought-input">
+                        <button onclick="closeRandomThoughtInput()" class="close-btn">&times;</button>
+                        <form action="{{ url_for('add_thought') }}" method="post">
+                            <input type="text" name="thought">
+                            <button class="add">Add</button>
+                        </form>
+                    </div>
+                    {% if thoughts %}
+                    {% for thought in thoughts %}
+                    <div class="random-thought">
+                        <span>{{ thought.thought }}</span>
+                    </div>
+                    {% endfor %}
+                    {% else %}
+                    <div class="random-thought">
+                        <span>You don't have any thought's yet Keep thinking</span>
+                    </div>
+                    {% endif %}
+                    <a href="{{ url_for('delete_all_thoughts') }}"><button class="delete-btn">Clear</button></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+<footer>
+    <div id="about" class="column-left">
+        <a href="#" class="brand">Todo-Hero</a>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+            tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+            cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+        </p>
+        <a href="#"><i class="social-icons fab fa-twitter"></i></a>
+        <a href="#"><i class="social-icons fab fa-github"></i></a>
+        <a href="#"><i class="social-icons fab fa-discord"></i></a>
+    </div>
+    <div class="column-right">
+        <div class="contact-section">
+            <form>
+                <div class="section">
+                    {{ contact_form.name.label }} <br> {{ contact_form.name(size=40)}}
+                </div>
+                <div class="section">
+                    {{ contact_form.email.label }} <br> {{ contact_form.email(size=40)}}
+                </div>
+                <div class="section">
+                    {{ contact_form.msg.label }} <br> {{ contact_form.msg }}
+                </div>
+                <div class="section">
+                    {{ contact_form.suggestion.label }} <br> {{ contact_form.suggestion }}
+                </div>
+                <button type="submit">Send</button>
+            </form>
+        </div>
+    </div>
+</footer>
+</div>
+<script type="text/javascript">
+// When the user clicks the icon toggle between hiding and showing the dropdown
+var bodyContainer = document.getElementById('body-container');
+var dropdown = document.getElementById('dropdown');
+var random = document.getElementById('random')
+var hsideNav = document.getElementById('historySideNav')
+
+document.getElementById('add-todo').addEventListener('click', function() {
+    document.getElementById('add-todo').click()
+});
+
+function showDropdown() {
+
+    dropdown.classList.toggle('show')
+}
+
+function openHistory() {
+    hsideNav.style.overflow = 'scroll'
+    hsideNav.style.width = '30%';
+
+}
+
+function closePopup() {
+    dropdown.style.display = 'none';
+}
+
+function closeHistory() {
+    hsideNav.style.overflow = 'hidden'
+    hsideNav.style.width = '0';
+}
+
+function openRandomThoughtInput() {
+    random.style.position = 'static';
+}
+
+function closeRandomThoughtInput() {
+    random.style.position = 'absolute';
+}
+document.getElementById('add-todo').accessKey = '/';
+
+function searchHistory() {
+    // body
+}
+</script>
+</body>
+
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Please Login or Register</title>
+    <style type="text/css">
+    .main {
+        width: 40%;
+        height: 40vh;
+        background-color: #4d4dff;
+        padding: 30px;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        margin: 10% 25% 10% 25%;
+        font-size: 1rem;
+        font-family: Arial;
+        color: #fff;
+        line-height: 1.3;
+        letter-spacing: 1px;
+    }
+
+    .content a {
+        color: #000;
+    }
+
+    .content a:hover {
+        color: #b34700;
+    }
+    </style>
+</head>
+
+<body>
+    <section class="main">
+        <div class="content">
+            <p>You need an account to view and change the settings of a profile on this site.</p>
+            <p>
+                Please <a href="{{ url_for('account') }}">Register</a> and account <span>Or</span> <a href="{{ url_for('account') }}">Login</a> if you already have one.
+            </p>
+        </div>
+    </section>
+</body>
+
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="{{ url_for('static',filename='all.js') }}"></script>
+    <title>Todo-Hero | Offical Website 2022</title>
+    <style type="text/css">
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        font-family: Arial;
+        margin: 0;
+        padding: 0;
+    }
+
+    .slideshow-container {
+        max-width: 900px;
+        position: relative;
+        margin: auto;
+    }
+
+    .mySlide {
+        display: none;
+        user-select: none;
+    }
+
+    .mySlide:hover .visit{
+        display: block;
+    }
+
+    .prev,
+    .next {
+        cursor: pointer;
+        position: absolute;
+        top: 50%;
+        width: auto;
+        margin-top: -22px;
+        padding: 16px;
+        color: #fff;
+        font-weight: bold;
+        font-size: 18px;
+        transition: 0.6s ease;
+        border-radius: 3px 0 0 3px;
+        user-select: none;
+    }
+
+    .next {
+        right: 0;
+        border-radius: 3px 0 0 3px;
+    }
+
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
+
+    .visit{
+        display: none;
+        position: absolute;
+        top: 50%;
+        right: 45%;
+        padding: 10px;
+        border-radius: 20px;
+        outline: none;
+        border: 1px solid #ccc;
+        background-color: #ddd;
+    }
+
+    .visit:hover {
+        background-color: #ff944d;
+        cursor: pointer;
+    }
+
+    .fade {
+        -webkit-animation-name: fade;
+        -webkit-animation-duration: 1.5s;
+        animation-name: fade;
+        animation-duration: 1.5s;
+    }
+
+    @-webkit-keyframes fade {
+        from {
+            opacity: .4
+        }
+
+        to {
+            opacity: 1
+        }
+    }
+
+    @keyframes fade {
+        from {
+            opacity: .4;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    .top-nav {
+        padding: 20px;
+        background-color: #fff;
+        border-bottom: 1px solid;
+        position: sticky;
+        top: 0;
+        width: 100%;
+        z-index: 2;
+        display: block;
+        margin-bottom: 1rem;
+
+    }
+
+    .top-nav span {
+        font-size: 2rem;
+    }
+
+    .top a {
+        position: absolute;
+        top: 1rem;
+        font-size: 18px;
+        text-decoration: none;
+        margin: 0 3px;
+        padding: 10px;
+        color: #000;
+    }
+
+    .top a:hover,
+    .top a:focus {
+        color: #fff;
+        cursor: pointer;
+    }
+
+    .top a.login {
+        border-radius: 40px;
+        right: 110px;
+    }
+
+    .top a.login:hover,
+    .top a.login:focus {
+        background-color: #ff944d;
+    }
+
+    .top a.register {
+        right: 20px;
+    }
+    .top a.register:hover,
+    .top a.register:focus{
+    	color: #ff944d;
+    }
+    .middle,
+    .footer {
+        padding: 50px;
+        font-family: Arial;
+
+    }
+
+    .middle p {
+        font-size: 1.2rem;
+        line-height: 1.2;
+        letter-spacing: .4px;
+    }
+
+    .footer {
+        padding: 20px 50px;
+        background: #000;
+        color: #fff;
+        position: relative;
+    }
+
+    .footer .icon {
+        font-size: 1.4rem;
+        margin: 0 3px;
+        color: #555;
+        cursor: pointer;
+    }
+
+    .footer .icon:hover,
+    .footer .icon:focus {
+        color: #fff;
+
+    }
+    .footer .connect{
+    	position: absolute;
+    	right: 20px;
+    	top: 20px;
+    }
+    .footer a {
+        text-decoration: none;
+        margin-right: 10px;
+        color: #fff;
+    }
+
+    .footer a:hover,
+    .footer a:focus {
+        text-decoration: underline;
+        color: #fff;
+    }
+    </style>
+</head>
+
+<body>
+    <section class="top">
+        <nav class="top-nav">
+            <span>TodoHero</span>
+            <a class="login" href="{{ url_for('account') }}">Login</a>
+            <a class="register" href="{{ url_for('account') }}">Register</a>
+        </nav>
+        <div class="slideshow-container">
+            <div class="mySlide fade">
+                <img src="../static/im1.png" style="width:100%">
+                <a class="visit" href="{{ url_for('home') }}">
+                        Visit Site
+                </a>
+            </div>
+            <div class="mySlide fade">
+                <img src="../static/im2.png" style="width:100%">
+            </div>
+            <div class="mySlide fade">
+                <img src="../static/im3.png" style="width:100%">
+            </div>
+            <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+            <a class="next" onclick="plusSlides(-1)">&#10095;</a>
+        </div>
+    </section>
+    <section class="middle">
+        <div class="about-section">
+            <h3>What is TodoHero?</h3>
+            <hr>
+            <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </section>
+    <section class="footer">
+        <p>Created by <a href="#">Allan Mitala</a></p>
+        <p class="connect">Connect on
+            <a href="https://twitter.com/Allan Mitala">
+                <span><i class="icon fab fa-twitter"></i></span>
+            </a>
+            <a href="https://github.com/mallanyksn">
+                <span><i class="icon fab fa-github"></i></span>
+            </a>
+            <a href="https://discord.com">
+                <span><i class="icon fab fa-discord"></i></span>
+            </a>
+        </p>
+    </section>
+    <script type="text/javascript">
+    var slideIndex = 1;
+    showSlides(slideIndex);
+
+    // Next/previous controls
+    function plusSlides(n) {
+        showSlides(slideIndex += n);
+    }
+
+    // Thumbnail image controls
+    function currentSlide(n) {
+        showSlides(slideIndex = n);
+    }
+
+    function showSlides(n) {
+        var i;
+        var slides = document.getElementsByClassName("mySlide");
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+
+        slides[slideIndex - 1].style.display = "block";
+
+    }
+    </script>
+</body>
+
+</html>
