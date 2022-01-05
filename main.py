@@ -9,7 +9,7 @@ from flask_gravatar import Gravatar
 # For Hashing the passwords
 from werkzeug.security import generate_password_hash, check_password_hash
 import datetime
-# to load thee environment variables
+# to load the environment variables
 from dotenv import load_dotenv
 # loading the forms
 from forms import ContactForm
@@ -233,4 +233,4 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(debug=True, port=8000)
+    app.run(debug=True)
